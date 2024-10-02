@@ -13,7 +13,7 @@
     - [] Configurar ruta estática y probarla (G)
     - [?] Hacer y probar Script (I)
     - [] Tcpwrapers
-    - [] Configurar cliente NTPs
+    - [] `Configurar cliente NTPs`
     - [] Configuar cliente Rsyslog
 
 ## Comprobar
