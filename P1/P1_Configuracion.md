@@ -4,115 +4,119 @@
 
 ### Analice los ficheros básicos de configuración
 
-- /etc/network/interfaces -> Se emplea para configurar las interfaces de red (IP estáticas, DHCP...)
+- `/etc/network/interfaces` -> Se emplea para configurar las interfaces de red (IP estáticas, DHCP...)
 	
-- /etc/hosts -> Asocia nombres de host a direcciones IP en la maquina local (resolv nombres antes de consultar servidores DNS)
+- `/etc/hosts` -> Asocia nombres de host a direcciones IP en la maquina local (resolv nombres antes de consultar servidores DNS)
 	
-- /etc/resolv.conf -> para configurar los servidorers DNS que debe usar el sistema
+- `/etc/resolv.conf` -> para configurar los servidorers DNS que debe usar el sistema
 	
-- /etc/nsswitch.conf -> Controla la resolución de nombres del sistema. Define la secuencia de fuentes que se utilizarán para buscar información (ej, usuarios y grupos, en diferentes bases de datos, como archivos locales)
+- `/etc/nsswitch.conf` -> Controla la resolución de nombres del sistema. Define la secuencia de fuentes que se utilizarán para buscar información (ej, usuarios y grupos, en diferentes bases de datos, como archivos locales)
 
-- /etc/apt/sources.list -> se especifican los repositorios software desde los que se pueden instalar paquetes (esencial para gestion de paquetes y actualizaciones del sistema)
+- `/etc/apt/sources.list` -> se especifican los repositorios software desde los que se pueden instalar paquetes (esencial para gestion de paquetes y actualizaciones del sistema)
 
-- /etc/hostname -> nombre de la máquina
+- `/etc/hostname` -> nombre de la máquina
 
-- /etc/hosts.allow & /etc/hosts.deny -> para configurar reglas de acceso al sistema (a través de TCP wrappers). Definen que hosts o servicios están permitidos o denegados
+- `/etc/hosts.allow` & `/etc/hosts.deny` -> para configurar reglas de acceso al sistema (a través de TCP wrappers). Definen que hosts o servicios están permitidos o denegados
 
-- /etc/ssh/sshd_config -> configuracion del servidor ssh (incluye opciones seguridad y autenticación)
+- `/etc/ssh/sshd_config` -> configuracion del servidor ssh (incluye opciones seguridad y autenticación)
 
-- /etc/fstab -> define como se deben montar los sistemas de archivos. (info sobre particiones, dispositivos y puntos de montaje)
+- `/etc/fstab` -> define como se deben montar los sistemas de archivos. (info sobre particiones, dispositivos y puntos de montaje)
 
-- /etc/timezone & /etc/localtime -> zona horaria e info de hora local (usar zdump para ver contenido de /etc/localtime)
+- `/etc/timezone` & `/etc/localtime` -> zona horaria e info de hora local (usar zdump para ver contenido de /etc/localtime)
 
 ## B) Actualice su máquina a la última versión estable disponible.
 
 ### Update
 
-
-
 - ⚠: Revisar apartado R) primero para facilitar
 
 ### ¿Qué distro y versión tiene la máquina inicialmente entregada?.
 
-- Podemos ver la versión utilizando los comandos "cat /etc/os-release" o "cat /etc/debian_version"
+- Podemos ver la versión utilizando los comandos `cat /etc/os-release` o `cat /etc/debian_version`
 
-- Empezamos con un debian 10.5 y lo updateamos hasta un debian 12.7
+- Empezamos con un debian **10.5** y lo updateamos hasta un debian **12.7**
 
-# C) Identifique la secuencia completa de arranque de una máquina basada en la distribución de referencia (desde la pulsación del botón de arranque hasta la pantalla de login)
+## C) Identifique la secuencia completa de arranque de una máquina basada en la distribución de referencia (desde la pulsación del botón de arranque hasta la pantalla de login)
 
-## Secuencia
+### Secuencia
 
-    1.Secuencia de arranque
-	    1.1. Inicio del firmware del sistema (BIOS/UEFI). Se realizan comprobaciones de hardware y se busca el bootloader en el dispositivo de inicio establecido
-	    1.2. El bootloader (en este caso el grub de arranque) se carga desde dicho dispositivo. Su tarea es cargar el kernel del SO principalmente
-	    1.3. Una vez cargado, el kernel toma el control del hardware e inicializa el sistema (hardware, drivers, creación de procesos esenciales...)
-	    1.4. Systemd (init) (o Systemd(1) (PID=1)) -> systemd es el sistema de inicialización empleado en debian. Gestiona servicios y procesos del sistema. Carga el objetivo (target) predeterminado configurado para el sistema durante el proceso de instalación
-	    1.x El proceso de arranque, termina su ejecución con systemd, que luego prepara el sistema para que el usuario inicie sesión (pantalla de login es una parte separada del proceso)
+Secuencia de arranque:
 
-## ¿Qué target por defecto tiene su máquina?
+- Inicio del firmware del sistema (BIOS/UEFI). Se realizan comprobaciones de hardware y se busca el bootloader en el dispositivo de inicio establecido
 
-    - Para ver el target por defecto "systemctl get-default" -> graphical.target (en este caso)
+- El bootloader (en este caso el grub de arranque) se carga desde dicho dispositivo. Su tarea es cargar el kernel del SO principalmente
 
-    - Para cambiar el target: "sudo systemctl set-default multi-user.target" (lo cambiamos a "multiuser")
+- Una vez cargado, el kernel toma el control del hardware e inicializa el sistema (hardware, drivers, creación de procesos esenciales...)
 
-## ¿Qué targets tiene su sistema y en qué estado se encuentran?.
+- Systemd (init) (o Systemd(1) (PID=1)) -> systemd es el sistema de inicialización empleado en debian. Gestiona servicios y procesos del sistema. Carga el objetivo (target) predeterminado configurado para el sistema durante el proceso de instalación
 
-    - Para ver el listado de targets: "systemctl list-units --type=target (-all)"
+- El proceso de arranque, termina su ejecución con systemd, que luego prepara el sistema para que el usuario inicie sesión (pantalla de login es una parte separada del proceso)
+
+### ¿Qué target por defecto tiene su máquina?
+
+- Para ver el target por defecto `systemctl get-default` -> `graphical.target` (en este caso)
+
+- Para cambiar el target: `sudo systemctl set-default multi-user.target` (lo cambiamos a **multiuser**)
+
+### ¿Qué targets tiene su sistema y en qué estado se encuentran?.
+
+- Para ver el listado de targets: `systemctl list-units --type=target (-all)`
 
 ## ¿Y los services? Obtenga la relación de servicios de su sistema y su estado.
 
-    - Para ver el listado de servicios: "systemctl list-units --type=service (-all)"
+- Para ver el listado de servicios: `systemctl list-units --type=service (-all)`
 
 ## ¿Qué otro tipo de unidades existen?
 
-    - 2.5.Otros tipos de unidades
-	    2.5.1. Timers -> Permiten programar tareas para que se ejecuten en momentos específicos
-	    2.5.2. Sockets -> Gestionan sockets y conexiones de red
-	    2.5.3. Paths -> supervisan combios en rutas de sistema de archivos (pueden activar otras unidades en respuesta a los cambios)
-	    2.5.4. Devices -> representan dispositivos gestionados por systemd
-	    2.5.5. Mounts -> gestionan puntos de montaje de sistema de archivos
-		    2.5.5.1. 'automount' -> se utiliza para definir puntos de montaje automático para sistemas de archivos. Se emplea junto con unidades de tipo 'mount' para montar sistemas de archivos automáticamente al acceder a ellos
-	    	2.5.5.2. 'mount' -> define puntos de montaje de sistemas de archivos. Indica a systemd cómo montar o desmontar sistemas de archivos (particiones de disco...)
+Otros tipos de unidades:
+
+- Timers -> Permiten programar tareas para que se ejecuten en momentos específicos
+- Sockets -> Gestionan sockets y conexiones de red
+- Paths -> supervisan combios en rutas de sistema de archivos (pueden activar otras unidades en respuesta a los cambios)
+- Devices -> representan dispositivos gestionados por systemd
+- Mounts -> gestionan puntos de montaje de sistema de archivos
+    - 'automount' -> se utiliza para definir puntos de montaje automático para sistemas de archivos. Se emplea junto con unidades de tipo
+    - 'mount' para montar sistemas de archivos automáticamente al acceder a ellos
+    - 'mount' -> define puntos de montaje de sistemas de archivos. Indica a systemd cómo montar o desmontar sistemas de archivos (particiones de disco...)
+        - 'slice' -> se utilizan para agrupar procesos en "rebanadas" (por el nombre) con recursos limitados. Ayudan a gestionar prioridad de procesos y recursos en un sistema
+        - Se pueden explorar las unidades en los directorios /etc/systemd/system y /lib/systemd/system (archivos con exensiones .service, .target, .timer...). (Podemos servirnos del comando ls -1 /lib/systemd/system | awk -F. '{print $NF}' | sort -u para obtener las distintas extensiones de dichos directorios)
+
 	
-	    2.5.6. 'slice' -> se utilizan para agrupar procesos en "rebanadas" (por el nombre) con recursos limitados. Ayudan a gestionar prioridad de procesos y recursos en un sistema
+### Configure el sudo de su máquina
 
-	    2.5.x. Se pueden explorar las unidades en los directorios /etc/systemd/system y /lib/systemd/system (archivos con exensiones .service, .target, .timer...). (Podemos servirnos del comando ls -1 /lib/systemd/system | awk -F. '{print $NF}' | sort -u para obtener las distintas extensiones de dichos directorios)
-	
-## Configure el sudo de su máquina
+- Para añadir tu usuario a sudo: `sudo usermod -aG sudo nombre_de_usuario` 
 
-    - Para añadir tu usuario a sudo: "sudo usermod -aG sudo nombre_de_usuario" 
+## D) Determine los tiempos aproximados de botado de su kernel y del userspace.
 
-# D) Determine los tiempos aproximados de botado de su kernel y del userspace.
+### Tiempo de booteado
 
-## Tiempo de booteado
+- Para ver el tiempo que tarda en bootear la máquina: `systemd-analyze`
 
-    - Para ver el tiempo que tarda en bootear la máquina: "systemd-analyze"
+###  Obtenga la relación de los tiempos de ejecución de los services de su sistema.
 
-##  Obtenga la relación de los tiempos de ejecución de los services de su sistema.
+- Para ver la relación tiempo-servicio:  `systemd-analyze blame`
 
-    - Para ver la relación tiempo-servicio:  "systemd-analyze blame"
+## E) Investigue si alguno de los servicios del sistema falla
 
-# E) Investigue si alguno de los servicios del sistema falla
+### Fallos
 
-## Fallos
+- Para ver los fallos de los servicios: `systemctl --failed` o `systemctl list-units --type=service --state=failed`
 
-    - Para ver los fallos de los servicios: "systemctl --failed" o "systemctl list-units --type=service --state=failed"
+### Pruebe algunas de las opciones del sistema de registro journald.
 
-## Pruebe algunas de las opciones del sistema de registro journald.
+- `journalctl -b -p 4` (muestra el ultimo registro de journal(-b) de nivel warning para arriba (-p 4))
 
-    - "journalctl -b -p 4" (muestra el ultimo registro de journal(-b) de nivel warning para arriba (-p 4))
+### Obtenga toda la información journald referente al proceso de botado de la máquina.
 
-## Obtenga toda la información journald referente al proceso de botado de la máquina.
+- Para obtener esta ibfo ejecutamo: `journalctl -b`
 
-    - Para obtener esta ibfo ejecutamo: "journalctl -b"
+### ¿Qué hace el systemd-timesyncd?
 
-## ¿Qué hace el systemd-timesyncd?
+- El servicio `systemd-timesyncd` es un cliente SNTP que se utiliza para sincronizar la hora del sistema con los servidores de hora (Responsable de mantener la hora del sistema actualizada)
 
-    - El servicio 'systemd-timesyncd' es un cliente SNTP que se utiliza para sincronizar la hora del sistema con los servidores de hora (Responsable de mantener la hora del sistema actualizada)
+## F) Identifique y cambie los principales parámetros de su segundo interface de red (ens34)
 
-# F) Identifique y cambie los principales parámetros de su segundo interface de red (ens34)
-
-## Configuración ens34
+### Configuración ens34
     # This file describes the network interfaces available on your system
     # and how to activate them. For more information, see interfaces(5).
     #source /etc/network/interfaces.d/*
@@ -127,7 +131,7 @@
     iface ens34 inet static
             address 10.11.X.X/23
 
-## Configure un segundo interface lógico. Al terminar, déjelo como estaba.
+### Configure un segundo interface lógico. Al terminar, déjelo como estaba.
 
     auto ens34:1
 	iface ens34:1 inet static -> tmb valdría poner ens34:0
@@ -136,32 +140,31 @@
 	broadcast 10.11.52.255
 	network 10.11.52.0
 
-# G) ¿Qué rutas (routing) están definidas en su sistema?
+## G) ¿Qué rutas (routing) están definidas en su sistema?
 
-## Ver rutas
+### Ver rutas
 
-    - Para ver las rutas: "ip route" o "netstat -r"
+- Para ver las rutas: `ip route` o `netstat -r`
 
-##  Incluya una nueva ruta estática a una determinada red.
+###  Incluya una nueva ruta estática a una determinada red.
 
-    - Añadir ruta temporalmente(durante la sesión): "sudo ip route add 10.11.X.X via 10.11.48.1 dev ens33"
+- Añadir ruta temporalmente(durante la sesión): `sudo ip route add 10.11.X.X via 10.11.48.1 dev ens33`
 
-    - Añadir ruta permanente:
+- Añadir ruta permanente:
 
         (post-)up ip route add 10.11.X.X via 10.11.48.1 (dentro de la interfaz ens 33 bien identado)
 
-# H) En el apartado d) se ha familiarizado con los services que corren en su sistema. ¿Son necesarios todos ellos?.
+## H) En el apartado d) se ha familiarizado con los services que corren en su sistema. ¿Son necesarios todos ellos?.
 
-## Si identifica servicios no necesarios, proceda adecuadamente. Una limpieza no le vendrá mal a su equipo, tanto desde el punto de vista de la seguridad, como del rendimiento.
+### Si identifica servicios no necesarios, proceda adecuadamente. Una limpieza no le vendrá mal a su equipo, tanto desde el punto de vista de la seguridad, como del rendimiento.
 
-    - AVISO: Revisar apartado R) primero para facilitar
+- ⚠: Revisar apartado R) primero para facilitar
 
-    - Servicios deshabilitados (especificar porqué)
-
-        -journal.flush.service
-        -apparmore
-        -avahi daemon
-        -e2scrub
+- Servicios deshabilitados (especificar porqué)
+    - **journal.flush.service**
+    - **apparmore** 
+    - **avahi daemon** 
+    - **e2scrub**  
 
 # I) Diseñe y configure un pequeño “script” y defina la correspondiente unidad de tipo service para que se ejecute en el proceso de botado de su máquina.
 
