@@ -1,38 +1,41 @@
-# A) Configure su máquina virtual de laboratorio con los datos proporcionados por el profesor.
+# Configuración de la máquina
 
-## Analice los ficheros básicos de configuración
+## A) Configure su máquina virtual de laboratorio con los datos proporcionados por el profesor.
 
-	- /etc/network/interfaces -> Se emplea para configurar las interfaces de red (IP estáticas, DHCP...)
+### Analice los ficheros básicos de configuración
+
+- /etc/network/interfaces -> Se emplea para configurar las interfaces de red (IP estáticas, DHCP...)
 	
-	- /etc/hosts -> Asocia nombres de host a direcciones IP en la maquina local (resolv nombres antes de consultar servidores DNS)
+- /etc/hosts -> Asocia nombres de host a direcciones IP en la maquina local (resolv nombres antes de consultar servidores DNS)
 	
-	- /etc/resolv.conf -> para configurar los servidorers DNS que debe usar el sistema
+- /etc/resolv.conf -> para configurar los servidorers DNS que debe usar el sistema
 	
-	- /etc/nsswitch.conf -> Controla la resolución de nombres del sistema. Define la secuencia de fuentes que se utilizarán para buscar información (ej, usuarios y grupos, en diferentes bases de datos, como archivos locales)
+- /etc/nsswitch.conf -> Controla la resolución de nombres del sistema. Define la secuencia de fuentes que se utilizarán para buscar información (ej, usuarios y grupos, en diferentes bases de datos, como archivos locales)
 
-	- /etc/apt/sources.list -> se especifican los repositorios software desde los que se pueden instalar paquetes (esencial para gestion de paquetes y actualizaciones del sistema)
+- /etc/apt/sources.list -> se especifican los repositorios software desde los que se pueden instalar paquetes (esencial para gestion de paquetes y actualizaciones del sistema)
 
-	- /etc/hostname -> nombre de la máquina
+- /etc/hostname -> nombre de la máquina
 
-	- /etc/hosts.allow & /etc/hosts.deny -> para configurar reglas de acceso al sistema (a través de TCP wrappers). Definen que hosts o servicios están permitidos o denegados
+- /etc/hosts.allow & /etc/hosts.deny -> para configurar reglas de acceso al sistema (a través de TCP wrappers). Definen que hosts o servicios están permitidos o denegados
 
-	- /etc/ssh/sshd_config -> configuracion del servidor ssh (incluye opciones seguridad y autenticación)
+- /etc/ssh/sshd_config -> configuracion del servidor ssh (incluye opciones seguridad y autenticación)
 
-	- /etc/fstab -> define como se deben montar los sistemas de archivos. (info sobre particiones, dispositivos y puntos de montaje)
+- /etc/fstab -> define como se deben montar los sistemas de archivos. (info sobre particiones, dispositivos y puntos de montaje)
 
-	- /etc/timezone & /etc/localtime -> zona horaria e info de hora local (usar zdump para ver contenido de /etc/localtime)
+- /etc/timezone & /etc/localtime -> zona horaria e info de hora local (usar zdump para ver contenido de /etc/localtime)
 
-# B) Actualice su máquina a la última versión estable disponible.
+## B) Actualice su máquina a la última versión estable disponible.
 
-## Update
+### Update
+:joy:
 
-    - AVISO: Revisar apartado R) primero para facilitar
+- AVISO: Revisar apartado R) primero para facilitar
 
-## ¿Qué distro y versión tiene la máquina inicialmente entregada?.
+### ¿Qué distro y versión tiene la máquina inicialmente entregada?.
 
-    - Podemos ver la versión utilizando los comandos "cat /etc/os-release" o "cat /etc/debian_version"
+- Podemos ver la versión utilizando los comandos "cat /etc/os-release" o "cat /etc/debian_version"
 
-    - Empezamos con un debian 10.5 y lo updateamos hasta un debian 12.7
+- Empezamos con un debian 10.5 y lo updateamos hasta un debian 12.7
 
 # C) Identifique la secuencia completa de arranque de una máquina basada en la distribución de referencia (desde la pulsación del botón de arranque hasta la pantalla de login)
 
