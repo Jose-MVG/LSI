@@ -27,9 +27,10 @@
 ## B) Actualice su máquina a la última versión estable disponible.
 
 ### Update
-:joy:
 
-- AVISO: Revisar apartado R) primero para facilitar
+
+
+- ⚠: Revisar apartado R) primero para facilitar
 
 ### ¿Qué distro y versión tiene la máquina inicialmente entregada?.
 
